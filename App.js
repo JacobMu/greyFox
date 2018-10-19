@@ -1,21 +1,37 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+
+import {ARScreen} from './src/screens/ARScreeen';
+import { MapScreen } from './src/screens/MapScreen';
+
+const MODES = {
+  MAP: 'map',
+  AR: 'ar',
+};
 
 export default class App extends React.Component {
+    constructor( props ) {
+      super(props)
+
+      this.state = {
+        actualMode: MODES.MAP,
+      }
+    }
+
   render() {
+    if (this.state.actualMode === MODES.MAP) {
+      return (
+        <MapScreen
+          onSwitch={() => this.setState({ actualMode: MODES.AR })}
+        />
+      );
+    }
+
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <ARScreen
+        onSwitch={() => this.setState({ actualMode: MODES.MAP })}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
